@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+
+body {
+  @apply bg-cream text-ink font-body;
+}
+
+::selection { background: #4CAF6D; color: white; }
+
+@layer utilities {
+  .vine-underline {
+    position: relative;
+  }
+  .vine-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    height: 6px;
+    width: 64px;
+    background: linear-gradient(90deg, #4CAF6D, #F4A833);
+    border-radius: 999px;
+  }
+}
+
+/* ---- Entrance animations ---- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0) rotate(1.5deg); }
+  50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(-3deg); }
+}
+@keyframes shimmerLine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+.delay-5 { animation-delay: 0.7s; }
+
+.animate-float-card { animation: floatCard 5s ease-in-out infinite; }
+.animate-float-badge { animation: floatBadge 4s ease-in-out infinite; }
+
+.shimmer-underline {
+  background: linear-gradient(90deg, #4CAF6D, #F4A833, #4CAF6D);
+  background-size: 200% 100%;
+  animation: shimmerLine 3s linear infinite;
+}
+
+/* ---- Modern Farm-Tech hero: animated mesh + particles ---- */
+@keyframes meshDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-3%, 2%) rotate(4deg); }
+}
+@keyframes particleDrift {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translate(var(--drift-x, 40px), -220px) rotate(180deg); opacity: 0; }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
+.hero-dark {
+  background: radial-gradient(ellipse 80% 60% at 20% -10%, rgba(76, 175, 109, 0.35), transparent 60%),
+              radial-gradient(ellipse 60% 50% at 90% 10%, rgba(244, 168, 51, 0.18), transparent 60%),
+              linear-gradient(160deg, #0A2A20 0%, #0F3D2E 55%, #123626 100%);
+}
+.mesh-layer {
+  animation: meshDrift 14s ease-in-out infinite;
+}
+.particle {
+  position: absolute;
+  bottom: -20px;
+  animation: particleDrift linear infinite;
+  pointer-events: none;
+}
+.glow-badge {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---- Farm Assistant chat widget ---- */
+@keyframes assistantRingPulse {
+  0% { transform: scale(0.9); opacity: 0.55; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes assistantLeafSway {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+@keyframes assistantPopIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes assistantTypingDot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+
+.assistant-fab-ring {
+  animation: assistantRingPulse 2.4s ease-out infinite;
+}
+.assistant-leaf-sway {
+  display: inline-block;
+  animation: assistantLeafSway 2.2s ease-in-out infinite;
+}
+.assistant-panel-in {
+  animation: assistantPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.assistant-typing-dot {
+  animation: assistantTypingDot 1.2s ease-in-out infinite;
+}
+.assistant-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.assistant-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+/* ---- Responsive navigation helpers ---- */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ---- Living weather scene ---- */
+.weather-scene { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.weather-sun-glow { position:absolute; width:220px; height:220px; right:7%; top:7%; border-radius:50%; background:radial-gradient(circle, rgba(255,210,90,.72) 0 16%, rgba(255,190,60,.28) 35%, transparent 70%); animation: sunBreath 4s ease-in-out infinite; }
+.weather-sun-core { position:absolute; inset:65px; border-radius:50%; background:#F4A833; box-shadow:0 0 45px rgba(244,168,51,.9); animation:sunPulse 3s ease-in-out infinite; }
+.weather-cloud { position:absolute; width:180px; height:58px; border-radius:50px; background:rgba(236,242,246,.78); filter:drop-shadow(0 10px 14px rgba(0,0,0,.12)); }
+.weather-cloud::before,.weather-cloud::after { content:""; position:absolute; border-radius:50%; background:inherit; }
+.weather-cloud::before { width:72px;height:72px;left:28px;top:-32px; }
+.weather-cloud::after { width:92px;height:92px;right:22px;top:-46px; }
+.weather-cloud-a { left:5%; top:17%; animation:cloudFloat 12s ease-in-out infinite; }
+.weather-cloud-b { right:12%; top:44%; transform:scale(.72); opacity:.5; animation:cloudFloat 15s ease-in-out infinite reverse; }
+.weather-rain { position:absolute; inset:0; overflow:hidden; opacity:.8; }
+.weather-rain i { position:absolute; top:-15%; left:calc((var(--i) * 2.37%) + 1%); width:2px; height:22px; border-radius:999px; background:linear-gradient(180deg, transparent, rgba(150,220,255,.95)); transform:rotate(14deg); animation:rainFall calc(0.55s + (var(--i) % 7) * .08s) linear infinite; animation-delay:calc((var(--i) % 9) * -.12s); }
+.weather-snow { position:absolute; inset:0; }
+.weather-snow i { position:absolute; top:-10%; left:calc((var(--i) * 3.41%) + 1%); color:rgba(255,255,255,.9); font-size:calc(8px + (var(--i) % 4) * 4px); animation:snowFall calc(5s + (var(--i) % 6) * .8s) linear infinite; animation-delay:calc((var(--i) % 10) * -.5s); }
+.weather-lightning { position:absolute; inset:0; background:rgba(255,255,255,0); animation:stormFlash 6s infinite; }
+.weather-lightning span { position:absolute; width:42px; height:90px; right:28%; top:28%; background:#F4A833; clip-path:polygon(48% 0, 100% 0, 62% 43%, 92% 43%, 28% 100%, 42% 54%, 12% 54%); filter:drop-shadow(0 0 12px rgba(244,168,51,.8)); opacity:0; animation:bolt 6s infinite; }
+.weather-fog-lines { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; gap:22px; padding:0 10%; opacity:.35; }
+.weather-fog-lines i { display:block; height:10px; border-radius:999px; background:rgba(255,255,255,.55); animation:fogMove 7s ease-in-out infinite; }
+.weather-fog-lines i:nth-child(2){width:80%; animation-delay:-2s}.weather-fog-lines i:nth-child(3){width:60%;animation-delay:-4s}
+
+@keyframes sunBreath { 50%{transform:scale(1.08);opacity:.85} }
+@keyframes sunPulse { 50%{box-shadow:0 0 70px rgba(244,168,51,1)} }
+@keyframes cloudFloat { 50%{transform:translateX(55px)} }
+@keyframes rainFall { to { transform:translate(35px,125vh) rotate(14deg); } }
+@keyframes snowFall { to { transform:translate(80px,120vh) rotate(360deg); } }
+@keyframes stormFlash { 0%,92%,96%,100%{background:transparent} 93%{background:rgba(255,255,255,.3)} 94%{background:transparent} }
+@keyframes bolt { 0%,92%,100%{opacity:0} 93%{opacity:1} 94%{opacity:0} }
+@keyframes fogMove { 50%{transform:translateX(45px)} }
+
+@media (prefers-reduced-motion: reduce) {
+  .weather-rain i,.weather-snow i,.weather-cloud,.weather-sun-glow,.weather-sun-core,.weather-lightning,.weather-lightning span,.weather-fog-lines i { animation:none !important; }
+}
